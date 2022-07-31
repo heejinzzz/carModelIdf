@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option go_package = "./proto";
+
+service CarModelIdf {
+  rpc Identify (IdfRequest) returns (IdfResponse) {}
+}
+
+message IdfRequest {
+  string ImgType = 1;
+  string ImgUrlOrBytes = 2;
+}
+
+message IdfResponse {
+  int64 Id = 1;
+  string Color = 2;
+  CarSize Size = 3;
+  CarModel Model = 4;
+}
+
+message CarSize {
+  int32 Height = 1;
+  int32 Left = 2;
+  int32 Top = 3;
+  int32 Width = 4;
+}
+
+message CarModel {
+  string Name = 1;
+  string Year = 2;
+  double Score = 3;
+}
