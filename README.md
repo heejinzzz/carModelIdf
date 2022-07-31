@@ -38,7 +38,8 @@ port 是你指定的 server 所要部署在的 端口号，默认值为 7180。
     import "github.com/heejinzzz/carModelIdf/client"
     
     
-    c := client.NewClient("192.168.222.100:7181")
+    // 根据指定的 CarModelIdf Server 地址，创建一个 CarModelIdf Client
+    c := client.NewClient("127.0.0.1:7180")
     
     // 根据图片的url获取图片，进行预测
     c.PredictByImgUrl("https://www.ssfiction.com/wp-content/uploads/2020/08/20200806_5f2c89cba3144.jpg")
