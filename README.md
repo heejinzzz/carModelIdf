@@ -42,5 +42,5 @@ port 是你指定的 server 所要部署在的 端口号，默认值为 7180。
     
     // 根据图片的url获取图片，进行预测
     c.PredictByImgUrl("https://www.ssfiction.com/wp-content/uploads/2020/08/20200806_5f2c89cba3144.jpg")
-    // 根据图片的本地路径，获取图片，进行预测
+    // 根据图片的本地路径获取图片，进行预测
     c.PredictByImgName("./car.jpg")
