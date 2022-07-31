@@ -1,10 +1,10 @@
 package main
 
 import (
-	"carModelIdf/proto"
 	"context"
 	"encoding/json"
 	"errors"
+	"github.com/heejinzzz/carModelIdf/proto"
 	"google.golang.org/grpc"
 	"io/ioutil"
 	"net"

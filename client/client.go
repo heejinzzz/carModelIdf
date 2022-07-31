@@ -1,10 +1,10 @@
 package client
 
 import (
-	"carModelIdf/proto"
 	"context"
 	"encoding/base64"
 	"fmt"
+	"github.com/heejinzzz/carModelIdf/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"io/ioutil"

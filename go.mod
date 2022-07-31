@@ -1,4 +1,4 @@
-module carModelIdf
+module github.com/heejinzzz/carModelIdf
 
 go 1.18
 
