@@ -1,32 +1,66 @@
-package main
+package client
 
 import (
 	"carModelIdf/proto"
 	"context"
+	"encoding/base64"
 	"fmt"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"io/ioutil"
 )
 
-var serverIP = "127.0.0.1"
-var serverPort = "7180"
+type carModelIdfClient struct {
+	client proto.CarModelIdfClient
+}
 
-func main() {
-	conn, err := grpc.Dial(serverIP + ":" + serverPort, grpc.WithTransportCredentials(insecure.NewCredentials()))
+// NewClient 根据指定的 CarModelIdf Server 的地址创建一个 CarModelIdf Client
+func NewClient(serverAddress string) *carModelIdfClient {
+	conn, err := grpc.Dial(serverAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		panic(err)
 	}
-	defer conn.Close()
 
 	client := proto.NewCarModelIdfClient(conn)
+	return &carModelIdfClient{
+		client: client,
+	}
+}
+
+// PredictByImgUrl 根据图片的url，获取图片，进行预测
+func (client *carModelIdfClient) PredictByImgUrl(url string) error {
 	req := proto.IdfRequest{
 		ImgType:       "url",
-		ImgUrlOrBytes: "https://club2.autoimg.cn/album/g20/M0F/5C/39/userphotos/2021/04/23/13/820_ChwEpmCCV4aAQGlcAAPT2PwwsJo731.jpg",
+		ImgUrlOrBytes: url,
 	}
-	res, err := client.Identify(context.Background(), &req)
+	res, err := client.client.Identify(context.Background(), &req)
 	if err != nil {
-		panic(err)
+		return err
 	}
+	printResult(res)
+	return nil
+}
+
+// PredictByImgName 根据图片的本地路径，获取图片，进行预测
+func (client *carModelIdfClient) PredictByImgName(imageName string) error {
+	bytes, err := ioutil.ReadFile(imageName)
+	if err != nil {
+		return err
+	}
+	imageString := base64.StdEncoding.EncodeToString(bytes)
+	req := proto.IdfRequest{
+		ImgType:       "bytes",
+		ImgUrlOrBytes: imageString,
+	}
+	res, err := client.client.Identify(context.Background(), &req)
+	if err != nil {
+		return err
+	}
+	printResult(res)
+	return nil
+}
+
+func printResult(res *proto.IdfResponse) {
 	fmt.Println("---- 车型识别结果 ----")
 	fmt.Println("编号：", res.Id)
 	fmt.Println("车型名称：" + res.Model.Name)
