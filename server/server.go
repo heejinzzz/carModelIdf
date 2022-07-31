@@ -14,7 +14,7 @@ import (
 )
 
 var BaiduUrl = "https://aip.baidubce.com/rest/2.0/image-classify/v1/car?access_token="
-var accessToken = "24.ee2a9ba48569facf759993173873e82d.2592000.1661083584.282335-26774131"
+var accessToken = "**********************************************************************"
 var ip = ""
 var port = "7180"
 
