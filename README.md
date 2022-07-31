@@ -29,8 +29,18 @@ port 是你指定的 server 所要部署在的 端口号，默认值为 7180。
 ----
 
 ## 二、CarModelIdf Client 使用
-Server 部署完成后，客户端方在 client/client.go 文件中修改 serverIP、serverPort，并将 req 中的 ImgUrlOrBytes 修改为想要识别的图片的 url 即可（也可以对本地图片进行识别，将其按 base64 编码为string字符串作为 req 中的 ImgUrlOrBytes ，并修改 req 的 ImgType 为 "bytes" ）。然后执行：
+先获取 CarModelIdf Client ：
 
-    go run client/client.go
+    go get github.com/heejinzzz/carModelIdf/client
+
+函数调用示例：
+
+    import "github.com/heejinzzz/carModelIdf/client"
     
-即可获取 CarModelIdf Server 对车型的预测结果。
+    
+    c := client.NewClient("192.168.222.100:7181")
+    
+    // 根据图片的url获取图片，进行预测
+    c.PredictByImgUrl("https://www.ssfiction.com/wp-content/uploads/2020/08/20200806_5f2c89cba3144.jpg")
+    // 根据图片的本地路径，获取图片，进行预测
+    c.PredictByImgName("./car.jpg")
